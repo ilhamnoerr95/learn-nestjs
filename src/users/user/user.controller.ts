@@ -12,10 +12,12 @@ import {
 } from '@nestjs/common';
 import { Response, Request } from 'express';
 
+// service
 import { UsersService } from './user.service';
 import { Connection } from './connection';
 import { Mail } from '../mail/mail';
 import { ThirdParty } from '../third-party/third-party';
+import { MemberService } from '../member/member.service';
 
 @Controller('/api/users')
 export class UserController {
@@ -26,6 +28,7 @@ export class UserController {
     // kita memberi tahu bahwa kita menggunakan provide yg sudah ada
     @Inject('aliasProvider') private mailAlias: Mail,
     private thirdParty: ThirdParty,
+    private memberService: MemberService,
   ) {}
 
   @Get('/connection')
@@ -33,6 +36,10 @@ export class UserController {
     this.thirdParty.save();
     this.mailService.sendMail('Not Alias success');
     this.mailAlias.sendMail('Alias');
+
+    console.info(this.memberService.getConnectionName());
+    this.memberService.sendEmail('MOdule Service');
+
     return this.connection.getConnection();
   }
 

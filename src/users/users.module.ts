@@ -8,6 +8,7 @@ import {
 } from './user/connection';
 import { mailClass, Mail } from './mail/mail';
 import { ThirdParty, createThirParty } from './third-party/third-party';
+import { MemberService } from './member/member.service';
 
 @Module({
   controllers: [UserController],
@@ -45,6 +46,8 @@ import { ThirdParty, createThirParty } from './third-party/third-party';
       provide: 'aliasProvider',
       useExisting: Mail,
     },
+    // service module reference
+    MemberService,
   ],
 })
 export class UsersModule {}
