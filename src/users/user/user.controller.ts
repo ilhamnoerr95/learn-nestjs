@@ -8,14 +8,33 @@ import {
   Param,
   Redirect,
   HttpRedirectResponse,
+  Inject,
 } from '@nestjs/common';
 import { Response, Request } from 'express';
 
 import { UsersService } from './user.service';
+import { Connection } from './connection';
+import { Mail } from '../mail/mail';
+import { ThirdParty } from '../third-party/third-party';
 
 @Controller('/api/users')
 export class UserController {
-  constructor(private readonly userService: UsersService) {}
+  constructor(
+    private userService: UsersService,
+    private connection: Connection,
+    private mailService: Mail,
+    // kita memberi tahu bahwa kita menggunakan provide yg sudah ada
+    @Inject('aliasProvider') private mailAlias: Mail,
+    private thirdParty: ThirdParty,
+  ) {}
+
+  @Get('/connection')
+  async connectionTes(): Promise<string> {
+    this.thirdParty.save();
+    this.mailService.sendMail('Not Alias success');
+    this.mailAlias.sendMail('Alias');
+    return this.connection.getConnection();
+  }
 
   @Get('/set-cookie')
   @Header('Set-Cookie', 'type=ninja')
