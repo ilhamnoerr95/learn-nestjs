@@ -3,6 +3,9 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { ProductsModule } from './products/products.module';
+import { MemberService } from './users/member/member.service';
+import { Mail, mailClass } from './users/mail/mail';
+import { ConfigModule } from '@nestjs/config';
 
 // module sebagai core dalam nestjs dalam pemanggilan setiap fungsi yg sudah dibuat
 // dr berbagai module ataupun controller, service laiinya
@@ -12,8 +15,25 @@ import { ProductsModule } from './products/products.module';
 // kita juga memberi tahu bahwa kita menggunakan provide yg sudah ada
 @Module({
   // fungsi dari import untuk memanggil module lain
-  imports: [UsersModule, ProductsModule],
+  imports: [
+    // agar penggunaan env jauh lebih simple
+    // bisa dipanggil per module
+    ConfigModule.forRoot({
+      // config service bisa di akses darimanapun
+      isGlobal: true,
+    }),
+    UsersModule,
+    ProductsModule,
+  ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    MemberService,
+    {
+      provide: Mail,
+      // gak perlu membuat/ memanggil injectable
+      useValue: mailClass,
+    },
+  ],
 })
 export class AppModule {}

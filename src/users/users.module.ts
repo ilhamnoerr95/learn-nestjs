@@ -3,12 +3,14 @@ import { UserController } from './user/user.controller';
 import { UsersService } from './user/user.service';
 import {
   Connection,
-  mysqlConnection,
-  mongoConnection,
+  //   mysqlConnection,
+  //   mongoConnection,
+  createConnection,
 } from './user/connection';
 import { mailClass, Mail } from './mail/mail';
 import { ThirdParty, createThirParty } from './third-party/third-party';
 import { MemberService } from './member/member.service';
+import { ConfigService } from '@nestjs/config';
 
 @Module({
   controllers: [UserController],
@@ -21,11 +23,13 @@ import { MemberService } from './member/member.service';
     // provider class untuk menentukan class mana yg akan digunakan
     {
       provide: Connection,
+      useFactory: createConnection,
+      inject: [ConfigService],
       //   class yg kita buat sendiri
-      useClass:
-        process.env.CONNECTION_DB === 'mysql'
-          ? mysqlConnection
-          : mongoConnection,
+      //   useClass:
+      //     process.env.CONNECTION_DB === 'mysql'
+      //       ? mysqlConnection
+      //       : mongoConnection,
     },
     // value provider
     {
