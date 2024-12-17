@@ -4,6 +4,7 @@ import * as cookieParser from 'cookie-parser';
 import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
+  // main root untuk modulenya
   const app = await NestFactory.create(AppModule);
   // untuk setup cookie parser
   app.use(cookieParser('rahasia ilahi'));

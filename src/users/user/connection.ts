@@ -11,7 +11,7 @@ export class Connection {
 @Injectable()
 export class mysqlConnection extends Connection {
   getConnection(): string {
-    return 'MYSQL DATABASE';
+    return 'POSTGRESQL DATABASE';
   }
 }
 
@@ -25,7 +25,7 @@ export class mongoConnection extends Connection {
 // factory provider
 export function createConnection(configProvider: ConfigService): Connection {
   const connectionType = configProvider.get('CONNECTION_DB');
-  if (connectionType === 'mysql') {
+  if (connectionType === 'postgresql') {
     return new mysqlConnection();
   } else if (connectionType === 'mongo') {
     return new mongoConnection();

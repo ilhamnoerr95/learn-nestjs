@@ -18,6 +18,8 @@ import { Connection } from './connection';
 import { Mail } from '../mail/mail';
 import { ThirdParty } from '../third-party/third-party';
 import { MemberService } from '../member/member.service';
+import { UserRepoService } from '../user-repo/user-repo.service';
+import { User } from '@prisma/client';
 
 @Controller('/api/users')
 export class UserController {
@@ -29,6 +31,7 @@ export class UserController {
     @Inject('aliasProvider') private mailAlias: Mail,
     private thirdParty: ThirdParty,
     private memberService: MemberService,
+    private userRepo: UserRepoService,
   ) {}
 
   @Get('/connection')
@@ -127,5 +130,13 @@ export class UserController {
   @Get('/say-hello')
   testInject(@Query('name') name: string): string {
     return this.userService.sayHello(name);
+  }
+
+  @Get('/create')
+  create(
+    @Query('name') name: string,
+    @Query('email') email: string,
+  ): Promise<User> {
+    return this.userRepo.save(name, email);
   }
 }

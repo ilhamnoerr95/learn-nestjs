@@ -6,6 +6,7 @@ import { ProductsModule } from './products/products.module';
 import { MemberService } from './users/member/member.service';
 import { Mail, mailClass } from './users/mail/mail';
 import { ConfigModule } from '@nestjs/config';
+import { PrismaModule } from './prisma/prisma.module';
 
 // module sebagai core dalam nestjs dalam pemanggilan setiap fungsi yg sudah dibuat
 // dr berbagai module ataupun controller, service laiinya
@@ -24,6 +25,7 @@ import { ConfigModule } from '@nestjs/config';
     }),
     UsersModule,
     ProductsModule,
+    PrismaModule,
   ],
   controllers: [AppController],
   providers: [

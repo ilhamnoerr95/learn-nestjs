@@ -11,8 +11,11 @@ import { mailClass, Mail } from './mail/mail';
 import { ThirdParty, createThirParty } from './third-party/third-party';
 import { MemberService } from './member/member.service';
 import { ConfigService } from '@nestjs/config';
+import { UserRepoService } from './user-repo/user-repo.service';
+import { PrismaModule } from 'src/prisma/prisma.module';
 
 @Module({
+  imports: [PrismaModule],
   controllers: [UserController],
   //default providers sifatnya singleton,
   //   tapi bisa dibuat jadi optional/custom berdasrakan class mana
@@ -52,6 +55,7 @@ import { ConfigService } from '@nestjs/config';
     },
     // service module reference
     MemberService,
+    UserRepoService,
   ],
 })
 export class UsersModule {}
