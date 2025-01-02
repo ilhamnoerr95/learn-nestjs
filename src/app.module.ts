@@ -1,4 +1,9 @@
-import { Module } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
@@ -8,6 +13,7 @@ import { Mail, mailClass } from './users/mail/mail';
 import { ConfigModule } from '@nestjs/config';
 import { PrismaModule } from './prisma/prisma.module';
 import { ValidationModule } from './validation/validation.module';
+import { LogMiddleware } from './log/log.middleware';
 
 // module sebagai core dalam nestjs dalam pemanggilan setiap fungsi yg sudah dibuat
 // dr berbagai module ataupun controller, service laiinya
@@ -40,4 +46,15 @@ import { ValidationModule } from './validation/validation.module';
     },
   ],
 })
-export class AppModule {}
+
+// overide app module dengan nestmodule
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    //  bisa menggunakan lebih dari 1 middlewarea
+    // for routes bisa digunakan untuk semua controller atau specific pathnya
+    consumer.apply(LogMiddleware).forRoutes({
+      path: '/api/*',
+      method: RequestMethod.ALL,
+    });
+  }
+}
