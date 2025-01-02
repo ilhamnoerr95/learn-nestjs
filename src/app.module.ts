@@ -7,6 +7,7 @@ import { MemberService } from './users/member/member.service';
 import { Mail, mailClass } from './users/mail/mail';
 import { ConfigModule } from '@nestjs/config';
 import { PrismaModule } from './prisma/prisma.module';
+import { ValidationModule } from './validation/validation.module';
 
 // module sebagai core dalam nestjs dalam pemanggilan setiap fungsi yg sudah dibuat
 // dr berbagai module ataupun controller, service laiinya
@@ -26,6 +27,7 @@ import { PrismaModule } from './prisma/prisma.module';
     UsersModule,
     ProductsModule,
     PrismaModule,
+    ValidationModule.forRoot(true),
   ],
   controllers: [AppController],
   providers: [
