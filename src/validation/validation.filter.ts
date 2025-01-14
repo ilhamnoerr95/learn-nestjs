@@ -6,6 +6,7 @@ import { ZodError } from 'zod';
 // untuk menggunakan filter kita harus gunakan decorator @UseFilter
 // @UseFilter bisa digunakan di method atau filter class controller
 // jika ditempatkan di class controller maka secara otomatis semua router method akan terimplentasi useFilter
+// validation error untuk zod saja
 @Catch(ZodError)
 export class ValidationFilter implements ExceptionFilter<ZodError> {
   catch(exception: ZodError, host: ArgumentsHost) {

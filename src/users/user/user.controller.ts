@@ -11,6 +11,10 @@ import {
   Inject,
   UseFilters,
   HttpException,
+  ParseIntPipe,
+  Post,
+  Body,
+  UsePipes,
 } from '@nestjs/common';
 import { Response, Request } from 'express';
 
@@ -23,6 +27,8 @@ import { MemberService } from '../member/member.service';
 import { UserRepoService } from '../user-repo/user-repo.service';
 import { User } from '@prisma/client';
 import { ValidationFilter } from 'src/validation/validation.filter';
+import { LoginUserReq, loginUserReqValidation } from 'src/model/login.mode';
+import { ValidationPipe } from 'src/validation/validation.pipe';
 
 @Controller('/api/users')
 export class UserController {
@@ -71,6 +77,15 @@ export class UserController {
 
   @Get('/params/:id')
   testParam(@Param('id') id: string): string {
+    return `test param decorator dengan id ${id}`;
+  }
+
+  // perlu diingat param yang dilempar pasti akan selalu tipe string
+  // saat akan melakukan validasi maka lebih baiknya kita bisa konversi
+  // sesuai apa yang diingkan menggunakan pipe yang disediakan nestjs
+  @Get('/:id')
+  testPipe(@Param('id', ParseIntPipe) id: number): string {
+    console.log(typeof id);
     return `test param decorator dengan id ${id}`;
   }
 
@@ -151,5 +166,19 @@ export class UserController {
       );
     }
     return this.userRepo.save(name, email);
+  }
+
+  // usePipes levelan method
+  @UsePipes(new ValidationPipe(loginUserReqValidation))
+  @UseFilters(ValidationFilter)
+  @Post('/login')
+  async loginFunction(
+    // params body bisa disesuaikan dngn body yg diinginkan,
+    // memanggil clas validation pipe yang sudah dibuat
+    // validasi terlebih dahulu menggunakan validation pipie
+    // @Body(new ValidationPipe(loginUserReqValidation))
+    @Body() request: LoginUserReq,
+  ) {
+    return console.log(request);
   }
 }
