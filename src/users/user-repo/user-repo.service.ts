@@ -9,11 +9,12 @@ export class UserRepoService {
   }
 
   async save(name: string, email: string): Promise<User> {
-    return await this.prismaService.user.create({
+    const saved = await this.prismaService.user.create({
       data: {
         name,
         email,
       },
     });
+    return saved;
   }
 }
