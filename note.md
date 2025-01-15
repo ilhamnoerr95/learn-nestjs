@@ -20,3 +20,18 @@ kita juga bisa membuat pipe sendiri dengan menggunanak turunan dari class pipieT
 > jika ingin menggunakan di class controller dapat menempatkan @UsePipe() di controller.
 > atau ketika ingin menggunakan secara global bisa menggunakan useGlobalPipes(), tp sangat jarang digunakan penggunakan global pipiesnya
 > perlu diperhatikan bahwa saat menggunakan usePipe secara global kita harus lebih berhati2 saat melakukan pengecekkan karena perbedaan tipe data dapat menyebakan error.
+
+# INTERCEPTORS
+
+Interceptor sama seperti middleware tapi yang membedakan adalah interceptor bisa mengubah hasil request dan response sebelum request / response tersebut sampai ke client.
+
+kalau middleware memiliki fungsi dalam mengelola request yang dimana akan diteruskan kepada middleware yang lain atau lanjut lempar ke controller.
+
+untuk membuat interceptor kita butuh turunan class interface nestinterceptor, dan caranya menggunakan @UseInterceptor() di controller method atau di controller. 
+
+interceptor juga bisa digunakan secara global dengan menggunakan @useGlobalinterceptors()
+
+[!note]
+> nestjs menggunakan rxjs (reactive extension librayr javasript), penggunaanya mirip dengan tipe data array.
+
+# adfasdfa

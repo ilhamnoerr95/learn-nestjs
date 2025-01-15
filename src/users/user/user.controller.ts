@@ -15,6 +15,7 @@ import {
   Post,
   Body,
   UsePipes,
+  UseInterceptors,
 } from '@nestjs/common';
 import { Response, Request } from 'express';
 
@@ -29,6 +30,7 @@ import { User } from '@prisma/client';
 import { ValidationFilter } from 'src/validation/validation.filter';
 import { LoginUserReq, loginUserReqValidation } from 'src/model/login.mode';
 import { ValidationPipe } from 'src/validation/validation.pipe';
+import { TimeInterceptor } from 'src/time/time.interceptor';
 
 @Controller('/api/users')
 export class UserController {
@@ -172,6 +174,9 @@ export class UserController {
   @UsePipes(new ValidationPipe(loginUserReqValidation))
   @UseFilters(ValidationFilter)
   @Post('/login')
+  // memanggilinterceptornya dngna params fungsi yg sudah dibuat sebelumnya
+  // sangat berguna sebagai utils tambahan
+  @UseInterceptors(TimeInterceptor)
   async loginFunction(
     // params body bisa disesuaikan dngn body yg diinginkan,
     // memanggil clas validation pipe yang sudah dibuat
@@ -179,6 +184,13 @@ export class UserController {
     // @Body(new ValidationPipe(loginUserReqValidation))
     @Body() request: LoginUserReq,
   ) {
-    return console.log(request);
+    // ketika ada decorator imterceptor maka return dari login akan ada
+    // response data yagn di tambah
+    return {
+      data: {
+        username: request.username,
+        password: request.password,
+      },
+    };
   }
 }
