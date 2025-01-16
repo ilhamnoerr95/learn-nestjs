@@ -14,6 +14,7 @@ import { ConfigModule } from '@nestjs/config';
 import { PrismaModule } from './prisma/prisma.module';
 import { ValidationModule } from './validation/validation.module';
 import { LogMiddleware } from './log/log.middleware';
+import { AuthMiddleware } from './auth/auth.middleware';
 
 // module sebagai core dalam nestjs dalam pemanggilan setiap fungsi yg sudah dibuat
 // dr berbagai module ataupun controller, service laiinya
@@ -55,6 +56,10 @@ export class AppModule implements NestModule {
     consumer.apply(LogMiddleware).forRoutes({
       path: '/api/*',
       method: RequestMethod.ALL,
-    });
+    }),
+      consumer.apply(AuthMiddleware).forRoutes({
+        path: '/api/users/current',
+        method: RequestMethod.GET,
+      });
   }
 }

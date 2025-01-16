@@ -31,6 +31,7 @@ import { ValidationFilter } from 'src/validation/validation.filter';
 import { LoginUserReq, loginUserReqValidation } from 'src/model/login.mode';
 import { ValidationPipe } from 'src/validation/validation.pipe';
 import { TimeInterceptor } from 'src/time/time.interceptor';
+import { Auth } from 'src/auth/auth.decorator';
 
 @Controller('/api/users')
 export class UserController {
@@ -190,6 +191,17 @@ export class UserController {
       data: {
         username: request.username,
         password: request.password,
+      },
+    };
+  }
+
+  @Get('/current')
+  current(@Auth() user: User): Record<string, any> {
+    return {
+      data: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
       },
     };
   }

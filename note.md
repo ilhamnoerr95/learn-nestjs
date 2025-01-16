@@ -34,4 +34,6 @@ interceptor juga bisa digunakan secara global dengan menggunakan @useGlobalinter
 [!note]
 > nestjs menggunakan rxjs (reactive extension librayr javasript), penggunaanya mirip dengan tipe data array.
 
-# adfasdfa
+# CUSTOM DECORATOR
+
+utnuk membuat custom decorator dnegna function createParamDecorator
