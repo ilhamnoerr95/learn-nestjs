@@ -56,10 +56,10 @@ export class AppModule implements NestModule {
     consumer.apply(LogMiddleware).forRoutes({
       path: '/api/*',
       method: RequestMethod.ALL,
-    }),
-      consumer.apply(AuthMiddleware).forRoutes({
-        path: '/api/users/current',
-        method: RequestMethod.GET,
-      });
+    });
+    consumer.apply(AuthMiddleware).forRoutes({
+      path: '/api/users/current',
+      method: RequestMethod.GET,
+    });
   }
 }

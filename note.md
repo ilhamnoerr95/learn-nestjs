@@ -37,3 +37,9 @@ interceptor juga bisa digunakan secara global dengan menggunakan @useGlobalinter
 # CUSTOM DECORATOR
 
 utnuk membuat custom decorator dnegna function createParamDecorator
+
+# GUARD
+saat membuat aplikasi, kadang proses authentication bisa kita lakukan dnengan middleware, selain ada proses authentication ada juga proses authorization yaitu validasi/mengecek apakah user berhak untuk akses aksi tersebut atau tidak. 
+middleware sulit digunakan untuk authorization , karena middleware gak tau mana router yang akan dituju, yg ditau hanya manggil next().
+
+how to using guard? : bisa gunakan turnan class ClassActivate, dan gunakana decorator @useGuards pada method untuk memanggil fungsi guardnya, bisa menggunakan useGlobalGuard()

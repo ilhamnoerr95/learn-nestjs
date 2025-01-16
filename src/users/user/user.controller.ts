@@ -16,6 +16,7 @@ import {
   Body,
   UsePipes,
   UseInterceptors,
+  UseGuards,
 } from '@nestjs/common';
 import { Response, Request } from 'express';
 
@@ -32,6 +33,7 @@ import { LoginUserReq, loginUserReqValidation } from 'src/model/login.mode';
 import { ValidationPipe } from 'src/validation/validation.pipe';
 import { TimeInterceptor } from 'src/time/time.interceptor';
 import { Auth } from 'src/auth/auth.decorator';
+import { RoleGuard } from 'src/role/role.guard';
 
 @Controller('/api/users')
 export class UserController {
@@ -158,17 +160,18 @@ export class UserController {
   create(
     @Query('name') name: string,
     @Query('email') email: string,
+    @Query('role') role: string,
   ): Promise<User> {
-    if (!name) {
-      throw new HttpException(
-        {
-          code: 400,
-          message: 'Required name!',
-        },
-        400,
-      );
-    }
-    return this.userRepo.save(name, email);
+    // if (!name) {
+    //   throw new HttpException(
+    //     {
+    //       code: 400,
+    //       message: 'Required name!',
+    //     },
+    //     400,
+    //   );
+    // }
+    return this.userRepo.save(name, email, role);
   }
 
   // usePipes levelan method
@@ -196,6 +199,10 @@ export class UserController {
   }
 
   @Get('/current')
+  @UseGuards(new RoleGuard(['admin', 'operator']))
+  // nambahin attribut user di request
+  // Custom decorator bisa digunakan sebagai pengganti decorator lainnya
+  // misalnya contoh dibawah ini menggantikan decorator Req() dari express
   current(@Auth() user: User): Record<string, any> {
     return {
       data: {

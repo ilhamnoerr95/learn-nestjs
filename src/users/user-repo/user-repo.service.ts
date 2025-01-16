@@ -8,13 +8,13 @@ export class UserRepoService {
     console.info('create user repository');
   }
 
-  async save(name: string, email: string): Promise<User> {
-    const saved = await this.prismaService.user.create({
+  async save(name: string, email: string, role: string): Promise<User> {
+    return await this.prismaService.user.create({
       data: {
         name,
         email,
+        role,
       },
     });
-    return saved;
   }
 }

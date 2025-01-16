@@ -12,10 +12,11 @@ export class ValidationPipe implements PipeTransform {
     console.log('penasarn', value);
 
     // lebih specifi untuk validasi dari data type yang dilempar
-    if (metadata.type === 'body') {
-      return this.zodtype.parse(value);
-    } else {
-      return value;
-    }
+    // if (metadata.type === 'body') {
+    //   return this.zodtype.parse(value);
+    // } else {
+    //   return value;
+    // }
+    return this.zodtype.parse(value);
   }
 }
