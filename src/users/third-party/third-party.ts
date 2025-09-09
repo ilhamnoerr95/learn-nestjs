@@ -8,7 +8,7 @@ export class ThirdParty {
     this.connection = test;
   }
   save() {
-    console.info(this.connection);
+    console.info(this.connection, 'ini ngambil langsung dari connection');
     console.info(`Save our connection to ${this.connection.getConnection()}`);
   }
 }

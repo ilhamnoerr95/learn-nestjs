@@ -27,11 +27,12 @@ Interceptor sama seperti middleware tapi yang membedakan adalah interceptor bisa
 
 kalau middleware memiliki fungsi dalam mengelola request yang dimana akan diteruskan kepada middleware yang lain atau lanjut lempar ke controller.
 
-untuk membuat interceptor kita butuh turunan class interface nestinterceptor, dan caranya menggunakan @UseInterceptor() di controller method atau di controller. 
+untuk membuat interceptor kita butuh turunan class interface nestinterceptor, dan caranya menggunakan @UseInterceptor() di controller method atau di controller.
 
 interceptor juga bisa digunakan secara global dengan menggunakan @useGlobalinterceptors()
 
 [!note]
+
 > nestjs menggunakan rxjs (reactive extension librayr javasript), penggunaanya mirip dengan tipe data array.
 
 # CUSTOM DECORATOR
@@ -39,7 +40,12 @@ interceptor juga bisa digunakan secara global dengan menggunakan @useGlobalinter
 utnuk membuat custom decorator dnegna function createParamDecorator
 
 # GUARD
-saat membuat aplikasi, kadang proses authentication bisa kita lakukan dnengan middleware, selain ada proses authentication ada juga proses authorization yaitu validasi/mengecek apakah user berhak untuk akses aksi tersebut atau tidak. 
+
+saat membuat aplikasi, kadang proses authentication bisa kita lakukan dnengan middleware, selain ada proses authentication ada juga proses authorization yaitu validasi/mengecek apakah user berhak untuk akses aksi tersebut atau tidak.
 middleware sulit digunakan untuk authorization , karena middleware gak tau mana router yang akan dituju, yg ditau hanya manggil next().
 
 how to using guard? : bisa gunakan turnan class ClassActivate, dan gunakana decorator @useGuards pada method untuk memanggil fungsi guardnya, bisa menggunakan useGlobalGuard()
+
+# export
+
+export didalam module agar setiap service yg ingin digunakan bisa diluar dari modulenya.

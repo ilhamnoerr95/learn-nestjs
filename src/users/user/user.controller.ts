@@ -175,7 +175,12 @@ export class UserController {
   }
 
   // usePipes levelan method
+  // pipe ini seperti validasi
+  // jika validasi gagal maka akan mengembalikan error
+  // jika validasi berhasil maka akan melanjutkan ke methodnya
+
   @UsePipes(new ValidationPipe(loginUserReqValidation))
+  // untuk nangkep error dari catch di filter
   @UseFilters(ValidationFilter)
   @Post('/login')
   // memanggilinterceptornya dngna params fungsi yg sudah dibuat sebelumnya
@@ -186,14 +191,16 @@ export class UserController {
     // memanggil clas validation pipe yang sudah dibuat
     // validasi terlebih dahulu menggunakan validation pipie
     // @Body(new ValidationPipe(loginUserReqValidation))
-    @Body() request: LoginUserReq,
+    @Body() iniNamaBebas: LoginUserReq,
   ) {
+    console.log(iniNamaBebas);
+
     // ketika ada decorator imterceptor maka return dari login akan ada
     // response data yagn di tambah
     return {
       data: {
-        username: request.username,
-        password: request.password,
+        username: iniNamaBebas.username,
+        password: iniNamaBebas.password,
       },
     };
   }

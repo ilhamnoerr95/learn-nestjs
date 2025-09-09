@@ -12,7 +12,8 @@ export class ValidationFilter implements ExceptionFilter<ZodError> {
   catch(exception: ZodError, host: ArgumentsHost) {
     const http = host.switchToHttp();
     const response = http.getResponse<Response>();
-
+    // ini harus dimapping
+    console.log(exception.errors[0].message, 'ini exception dari filter');
     response.status(400).json({
       code: 400,
       errors: exception.errors,
